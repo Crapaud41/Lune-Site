@@ -1,1 +1,123 @@
-
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10131d">
+  <meta name="description" content="La Lune en direct : phase, illumination, distance et âge lunaire.">
+  <title>La Lune en direct</title>
+  <style>
+    :root{color-scheme:dark;--bg:#10131d;--panel:rgba(21,26,39,.82);--line:rgba(255,255,255,.12);--text:#f5f2eb;--muted:#a7adba;--gold:#e8c17a;--blue:#9bb8df}
+    *{box-sizing:border-box}
+    html,body{width:100%;height:100%;margin:0;overflow:hidden}
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:linear-gradient(115deg,rgba(10,13,21,.79),rgba(10,13,21,.58)),url("bg-reeds.jpg") center center / cover no-repeat fixed;}
+    .page{height:100dvh;min-height:480px;display:grid;grid-template-rows:auto 1fr auto;padding:0 clamp(18px,5vw,76px);}
+    header{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+    .brand{font-family:Georgia,serif;letter-spacing:.12em;font-size:.88rem;text-transform:uppercase;color:var(--text);text-decoration:none}
+    nav{display:flex;gap:clamp(14px,3vw,38px)}nav a{font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}nav a:hover,nav a[aria-current="page"]{color:var(--gold)}
+    main{width:min(1120px,100%);margin:auto;display:grid;grid-template-columns:minmax(240px,.85fr) minmax(320px,1.15fr);gap:clamp(28px,7vw,100px);align-items:center;padding:24px 0}
+    .moon-side{text-align:center}.eyebrow{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+    .moon{width:min(30vw,310px);min-width:190px;aspect-ratio:1;border-radius:50%;margin:24px auto 20px;background:radial-gradient(circle at 35% 30%,#fff9e9 0,#d7d2c5 38%,#a8a9ac 72%,#777e8d 100%);box-shadow:0 0 38px #d2d9e433,0 0 110px #a8c5f21a,inset -20px -8px 28px #1c2230a8;position:relative;overflow:hidden;}
+    .moon:after{content:"";position:absolute;inset:-2%;border-radius:50%;background:#111521;transform:translateX(var(--shadow-x,0%));transition:transform .6s ease;}
+    .phase-name{font-family:Georgia,serif;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:400;margin:0 0 6px}.phase-caption{margin:0;color:var(--muted);font-size:.9rem}
+    .info h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(2rem,4.5vw,3.5rem);line-height:1.05;margin:0 0 12px}.info-intro{color:var(--muted);line-height:1.6;margin:0 0 26px;max-width:48ch}
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.metric,.next{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:17px 15px;backdrop-filter:blur(12px)}
+    .metric-label{display:block;color:var(--muted);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:11px}.metric-value{font-variant-numeric:tabular-nums;font-size:clamp(1.15rem,2vw,1.65rem);white-space:nowrap}.metric-unit{font-size:.72rem;color:var(--muted);margin-left:3px}
+    .next{margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:16px}.next-label{color:var(--muted);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase}.next-title{font-family:Georgia,serif;font-size:1.15rem;margin-top:5px}.next-count{font-variant-numeric:tabular-nums;color:var(--gold);text-align:right;font-size:.9rem;white-space:nowrap}
+    .phases{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.phase-card{text-align:center;border-top:1px solid var(--line);padding:12px 4px 0}.phase-symbol{font-size:1.25rem;color:var(--blue)}.phase-card b{display:block;font-size:.68rem;font-weight:500;color:var(--muted);margin-top:5px}.phase-card time{display:block;font-size:.68rem;color:var(--text);margin-top:4px}
+    footer{height:48px;display:flex;align-items:center;justify-content:center;border-top:1px solid var(--line);color:var(--muted);font-size:.7rem;letter-spacing:.08em}
+    .error{color:#ffc1b8;font-size:.82rem;margin-top:12px;min-height:1.2em}
+    @media(max-width:760px){.page{padding:0 18px;grid-template-rows:64px 1fr 40px}header{height:64px}.brand{font-size:.7rem}nav{gap:12px}nav a{font-size:.65rem;letter-spacing:.04em}main{grid-template-columns:1fr;gap:16px;padding:15px 0;align-content:center}.moon{width:min(34vw,180px);min-width:125px;margin:10px auto}.phase-name{font-size:1.5rem}.phase-caption{font-size:.75rem}.info h1{font-size:1.9rem;margin-bottom:7px}.info-intro{font-size:.78rem;margin-bottom:13px}.metric{padding:12px 9px}.metric-label{font-size:.57rem;margin-bottom:7px}.metric-value{font-size:1.05rem}.metric-unit{font-size:.62rem}.next{padding:11px}.phases{margin-top:8px}.phase-card{padding-top:8px}.phase-symbol{font-size:1rem}.phase-card b,.phase-card time{font-size:.6rem}}
+    @media(max-width:390px){.page{padding-inline:12px}nav{gap:8px}nav a{font-size:.59rem}.moon{width:118px}.metrics{gap:6px}.metric{padding:10px 7px}.metric-value{font-size:.94rem}.info h1{font-size:1.65rem}}
+    @media(max-height:650px) and (min-width:761px){.moon{width:min(24vw,220px);margin:12px auto}.info h1{font-size:2.5rem}.info-intro{margin-bottom:14px}.metric{padding:12px}.phases{margin-top:7px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important}}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <a class="brand" href="index.html">◐ Au fil des nuits</a>
+      <nav aria-label="Navigation principale">
+        <a href="index.html">Accueil</a><a href="photos.html">Photos</a><a href="materiel.html">Matériel</a><a href="widget.html" aria-current="page">Widget</a>
+      </nav>
+    </header>
+    <main>
+      <section class="moon-side" aria-label="Phase lunaire actuelle">
+        <p class="eyebrow">Observation en direct</p>
+        <div class="moon" id="moon" role="img" aria-label="Illustration de la phase actuelle de la Lune"></div>
+        <h2 class="phase-name" id="phase-name">Chargement…</h2>
+        <p class="phase-caption">La Lune, maintenant</p>
+      </section>
+      <section class="info">
+        <h1>La Lune en direct</h1>
+        <p class="info-intro">Quelques repères pour observer la Lune telle qu’elle est aujourd’hui, où que tu sois.</p>
+        <div class="metrics" aria-live="polite">
+          <div class="metric"><span class="metric-label">Éclairée</span><span class="metric-value" id="illumination">—</span><span class="metric-unit">%</span></div>
+          <div class="metric"><span class="metric-label">Distance</span><span class="metric-value" id="distance">—</span><span class="metric-unit">km</span></div>
+          <div class="metric"><span class="metric-label">Âge lunaire</span><span class="metric-value" id="age">—</span><span class="metric-unit">jours</span></div>
+        </div>
+        <div class="next"><div><div class="next-label">Prochaine grande phase</div><div class="next-title" id="next-title">Calcul en cours…</div></div><div class="next-count" id="next-count">—</div></div>
+        <div class="phases" id="phases" aria-label="Prochaines phases lunaires"></div>
+        <div class="error" id="error" role="status"></div>
+      </section>
+    </main>
+    <footer id="updated">Données astronomiques calculées sur ton appareil</footer>
+  </div>
+  <script src="astronomy.min.js"></script>
+  <script>
+    (() => {
+      const $ = id => document.getElementById(id);
+      const phases = [
+        {angle:0,name:"Nouvelle Lune",symbol:"●"},
+        {angle:90,name:"Premier quartier",symbol:"◐"},
+        {angle:180,name:"Pleine Lune",symbol:"○"},
+        {angle:270,name:"Dernier quartier",symbol:"◑"}
+      ];
+      const fmt = new Intl.NumberFormat("fr-FR");
+      const dateFmt = new Intl.DateTimeFormat("fr-FR",{day:"numeric",month:"short"});
+      function phaseLabel(angle){
+        if(angle<22.5||angle>=337.5)return "Nouvelle Lune";
+        if(angle<67.5)return "Premier croissant";
+        if(angle<112.5)return "Premier quartier";
+        if(angle<157.5)return "Lune gibbeuse croissante";
+        if(angle<202.5)return "Pleine Lune";
+        if(angle<247.5)return "Lune gibbeuse décroissante";
+        if(angle<292.5)return "Dernier quartier";
+        return "Dernier croissant";
+      }
+      function update(){
+        if(!window.Astronomy){$("error").textContent="La bibliothèque astronomique ne s’est pas chargée. Vérifie que astronomy.min.js est dans le même dossier.";return;}
+        try{
+          const now=new Date();
+          const illum=Astronomy.Illumination(Astronomy.Body.Moon,now);
+          const angle=Astronomy.MoonPhase(now);
+          const distance=Astronomy.Libration(now).dist_km;
+          const newMoon=Astronomy.SearchMoonPhase(0,now,-35);
+          const age=(now-newMoon.date)/86400000;
+          $("illumination").textContent=fmt.format(illum.phase_fraction*100);
+          $("distance").textContent=fmt.format(Math.round(distance));
+          $("age").textContent=fmt.format(age);
+          const label=phaseLabel(angle);
+          $("phase-name").textContent=label;
+          $("moon").setAttribute("aria-label",`Lune ${label}, éclairée à ${fmt.format(illum.phase_fraction*100)} %`);
+          const waxing=angle<180;
+          const fraction=illum.phase_fraction;
+          const shadow=Math.max(0,Math.min(100,(1-fraction)*100));
+          $("moon").style.setProperty("--shadow-x",`${waxing?shadow:-shadow}%`);
+          const upcoming=phases.map(p=>({ ...p, time:Astronomy.SearchMoonPhase(p.angle,now,35) })).filter(p=>p.time&&p.time.date>now).sort((a,b)=>a.time.date-b.time.date);
+          const next=upcoming[0];
+          if(next){
+            const days=(next.time.date-now)/86400000;
+            $("next-title").textContent=next.name;
+            $("next-count").textContent=days<1?`dans ${Math.max(1,Math.floor(days*24))} h`:`dans ${fmt.format(days)} jours`;
+          }
+          $("phases").innerHTML=upcoming.slice(0,4).map(p=>`<div class="phase-card"><span class="phase-symbol" aria-hidden="true">${p.symbol}</span><b>${p.name}</b><time datetime="${p.time.date.toISOString()}">${dateFmt.format(p.time.date)}</time></div>`).join("");
+          $("updated").textContent=`Données astronomiques calculées sur ton appareil · ${new Intl.DateTimeFormat("fr-FR",{hour:"2-digit",minute:"2-digit"}).format(now)}`;
+          $("error").textContent="";
+        }catch(e){$("error").textContent="Impossible de calculer les données lunaires pour le moment.";}
+      }
+      update();setInterval(update,60000);
+    })();
+  </script>
+</body>
+</html>
