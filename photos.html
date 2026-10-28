@@ -1,1 +1,121 @@
-
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10131d">
+  <meta name="description" content="Deux albums de photographies, entre la Lune et la nature.">
+  <title>Photos — Au fil des nuits</title>
+  <style>
+    :root{color-scheme:dark;--text:#f5f2eb;--muted:#c1c3c8;--gold:#e8c17a;--line:rgba(255,255,255,.2)}
+    *{box-sizing:border-box}
+    html,body{width:100%;height:100%;margin:0;overflow:hidden}
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:linear-gradient(110deg,rgba(8,12,19,.68),rgba(8,12,19,.48)),url("bg-lake.jpg") center center / cover no-repeat fixed}
+    .page{height:100dvh;min-height:500px;display:grid;grid-template-rows:78px 1fr;padding:0 clamp(20px,5vw,76px)}
+    header{height:78px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-bottom:1px solid var(--line)}
+    .brand{justify-self:start;color:var(--text);text-decoration:none;font-family:Georgia,serif;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+    nav{grid-column:2;display:flex;align-items:center;justify-content:center;gap:clamp(18px,3vw,42px)}
+    nav a{color:var(--muted);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;white-space:nowrap;transition:color .2s}
+    nav a:hover,nav a[aria-current="page"]{color:var(--gold)}
+    main{width:min(1120px,100%);margin:auto;padding:24px 0 34px}
+    .intro{text-align:center;margin-bottom:clamp(18px,3vh,32px)}
+    .eyebrow{color:var(--gold);font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;margin:0 0 10px}
+    h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(2.2rem,4.3vw,3.8rem);line-height:1;margin:0 0 10px}
+    .subtitle{color:var(--muted);font-family:Georgia,serif;font-size:clamp(.95rem,1.7vw,1.15rem);font-style:italic;margin:0}
+    .albums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,5vw,72px);align-items:center}
+    .album{min-width:0;text-align:center}
+    .stack-wrap{height:clamp(250px,43vh,390px);display:grid;place-items:center;position:relative;isolation:isolate}
+    .stack{width:min(72%,360px);height:88%;position:relative;transition:transform .35s ease}
+    .album:hover .stack{transform:translateY(-7px) scale(1.025)}
+    .print{position:absolute;width:76%;height:82%;left:12%;top:8%;border:1px solid rgba(255,255,255,.48);background:#18202c;box-shadow:0 18px 48px #05070c77;overflow:hidden}
+    .print:nth-child(1){transform:rotate(-10deg) translate(-14%,-2%);z-index:1}
+    .print:nth-child(2){transform:rotate(8deg) translate(13%,0);z-index:2}
+    .print:nth-child(3){transform:rotate(-1deg);z-index:3}
+    .print img{width:100%;height:100%;object-fit:cover;display:block}
+    .nature-one img{object-position:center 54%}
+    .nature-two img{object-position:center 58%}
+    .nature-three img{object-position:center 50%}
+    .moon-print{background-color:#111622;background-image:radial-gradient(circle at 50% 48%,#cfcabd 0,#a7a8ab 30%,#4b5362 31%,#131824 32%,transparent 33%),radial-gradient(circle at 30% 28%,#ffffff18 0 1px,transparent 2px),radial-gradient(circle at 72% 70%,#ffffff18 0 1px,transparent 2px),linear-gradient(145deg,#252d3d,#080b13)}
+    .moon-print:nth-child(1){background-image:radial-gradient(circle at 45% 48%,#d7d2c5 0,#a7a8ab 31%,#151a26 32%,#101520 47%,transparent 48%),linear-gradient(145deg,#283346,#090c14)}
+    .moon-print:nth-child(2){background-image:radial-gradient(circle at 53% 48%,#e2ddcf 0,#aeb0b1 39%,#1a2030 40%,#101520 51%,transparent 52%),linear-gradient(145deg,#202a3b,#080b12)}
+    .moon-print:nth-child(3){background-image:radial-gradient(circle at 50% 50%,#f0ead8 0,#c9c4b7 42%,#858a94 70%,#41495a 100%),radial-gradient(circle at 34% 35%,#777e8a 0 3%,transparent 4%),radial-gradient(circle at 63% 58%,#777e8a 0 4%,transparent 5%),linear-gradient(145deg,#222c3d,#090d16)}
+    .emoji{position:absolute;z-index:5;top:2%;left:50%;transform:translateX(-50%);font-size:clamp(2.2rem,4vw,3.2rem);filter:drop-shadow(0 4px 12px #0009)}
+    .album-title{font-family:Georgia,serif;font-size:clamp(1.5rem,2.6vw,2.15rem);font-weight:400;margin:5px 0 6px}
+    .album-caption{color:var(--muted);font-size:.76rem;letter-spacing:.13em;text-transform:uppercase;margin:0}
+    @media(max-width:650px){
+      .page{min-height:520px;grid-template-rows:68px 1fr;padding:0 14px}
+      header{height:68px;grid-template-columns:1fr}
+      .brand{display:none}
+      nav{grid-column:1;gap:clamp(12px,4vw,24px)}
+      nav a{font-size:.62rem;letter-spacing:.07em}
+      main{padding:18px 0 22px}
+      .intro{margin-bottom:12px}
+      .stack-wrap{height:clamp(210px,36vh,290px)}
+      .stack{width:88%;height:84%}
+      .albums{gap:8px}
+      .print{width:82%;height:82%;left:9%}
+      .album-title{font-size:1.3rem}
+      .album-caption{font-size:.59rem;letter-spacing:.08em}
+    }
+    @media(max-width:380px){
+      nav{gap:9px}
+      nav a{font-size:.57rem}
+      .stack-wrap{height:200px}
+      .stack{width:94%}
+      .album-title{font-size:1.15rem}
+    }
+    @media(max-height:650px) and (min-width:651px){
+      main{padding:12px 0}
+      .intro{margin-bottom:10px}
+      .stack-wrap{height:clamp(205px,38vh,270px)}
+    }
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important}}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <a class="brand" href="index.html">◐ Au fil des nuits</a>
+      <nav aria-label="Navigation principale">
+        <a href="index.html">Accueil</a>
+        <a href="photos.html" aria-current="page">Photos</a>
+        <a href="materiel.html">Matériel</a>
+        <a href="widget.html">Widget</a>
+      </nav>
+    </header>
+    <main>
+      <section class="intro">
+        <p class="eyebrow">Deux albums, un même regard</p>
+        <h1>Mes photographies</h1>
+        <p class="subtitle">Choisis ce que tu as envie de découvrir.</p>
+      </section>
+      <section class="albums" aria-label="Choisir un album photo">
+        <article class="album">
+          <div class="stack-wrap">
+            <span class="emoji" aria-hidden="true">🌙</span>
+            <div class="stack" aria-hidden="true">
+              <div class="print moon-print"></div>
+              <div class="print moon-print"></div>
+              <div class="print moon-print"></div>
+            </div>
+          </div>
+          <h2 class="album-title">La Lune</h2>
+          <p class="album-caption">Au fil de ses phases</p>
+        </article>
+        <article class="album">
+          <div class="stack-wrap">
+            <span class="emoji" aria-hidden="true">🍃</span>
+            <div class="stack" aria-hidden="true">
+              <div class="print nature-one"><img src="bg-reeds.jpg" alt=""></div>
+              <div class="print nature-two"><img src="bg-field.jpg" alt=""></div>
+              <div class="print nature-three"><img src="bg-lake.jpg" alt=""></div>
+            </div>
+          </div>
+          <h2 class="album-title">La Nature</h2>
+          <p class="album-caption">Instants au grand air</p>
+        </article>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
