@@ -110,7 +110,7 @@ main {
   display: none;
 }
 
-/* Accueil : photo entière, avec un fond flouté pour remplir l’écran */
+/* Accueil : photo plein écran, sans bandes latérales */
 .hero {
   position: relative;
   isolation: isolate;
@@ -125,31 +125,11 @@ main {
   position: absolute;
   z-index: 0;
   inset: 0;
-  background: none;
-}
-
-.hero-image::before {
-  position: absolute;
-  z-index: 0;
-  inset: -24px;
   background-image: url("hero.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  content: "";
-  filter: blur(20px) brightness(0.48);
-  transform: scale(1.04);
-}
-
-.hero-image::after {
-  position: absolute;
-  z-index: 1;
-  inset: 0;
-  background-image: url("hero.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  content: "";
+  filter: saturate(0.92) brightness(0.68);
 }
 
 .hero-shade {
@@ -172,7 +152,7 @@ main {
   z-index: 2;
   top: 50%;
   left: 7.5vw;
-  width: min(560px, 48vw);
+  width: min(720px, 55vw);
   transform: translateY(-50%);
 }
 
@@ -188,7 +168,7 @@ main {
   margin-bottom: 1rem;
   color: var(--ink);
   font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(3rem, 6vw, 5.6rem);
+  font-size: clamp(3rem, 5vw, 5rem);
   font-weight: 500;
   line-height: 1.02;
 }
