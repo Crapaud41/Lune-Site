@@ -125,23 +125,31 @@ main {
   position: absolute;
   z-index: 0;
   inset: 0;
-  background-image: url("hero.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
+  background: none;
 }
 
 .hero-image::before {
   position: absolute;
-  z-index: -1;
+  z-index: 0;
   inset: -24px;
-  background-image: inherit;
+  background-image: url("hero.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   content: "";
   filter: blur(20px) brightness(0.48);
   transform: scale(1.04);
+}
+
+.hero-image::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background-image: url("hero.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: "";
 }
 
 .hero-shade {
@@ -195,11 +203,6 @@ main {
   color: rgba(238, 240, 248, 0.82);
   font-size: 1rem;
   line-height: 1.7;
-}
-
-/* Le bouton avait été indiqué comme élément à retirer */
-.hero-copy .button {
-  display: none;
 }
 
 /* Carte des informations lunaires */
@@ -268,7 +271,11 @@ main {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(90deg, transparent 48%, rgba(9, 11, 18, 0.78) 52%);
+  background: linear-gradient(
+    90deg,
+    transparent 48%,
+    rgba(9, 11, 18, 0.78) 52%
+  );
 }
 
 .moon-summary h2 {
