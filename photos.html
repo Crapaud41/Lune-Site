@@ -4,118 +4,665 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#10131d">
-  <meta name="description" content="Deux albums de photographies, entre la Lune et la nature.">
+  <meta name="description" content="Les photographies de la Lune et de la nature, au fil des nuits.">
   <title>Photos — Au fil des nuits</title>
+  <link rel="stylesheet" href="style.css">
+
   <style>
-    :root{color-scheme:dark;--text:#f5f2eb;--muted:#c1c3c8;--gold:#e8c17a;--line:rgba(255,255,255,.2)}
-    *{box-sizing:border-box}
-    html,body{width:100%;height:100%;margin:0;overflow:hidden}
-    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:linear-gradient(110deg,rgba(8,12,19,.68),rgba(8,12,19,.48)),url("bg-lake.jpg") center center / cover no-repeat fixed}
-    .page{height:100dvh;min-height:500px;display:grid;grid-template-rows:78px 1fr;padding:0 clamp(20px,5vw,76px)}
-    header{height:78px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-bottom:1px solid var(--line)}
-    .brand{justify-self:start;color:var(--text);text-decoration:none;font-family:Georgia,serif;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
-    nav{grid-column:2;display:flex;align-items:center;justify-content:center;gap:clamp(18px,3vw,42px)}
-    nav a{color:var(--muted);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;white-space:nowrap;transition:color .2s}
-    nav a:hover,nav a[aria-current="page"]{color:var(--gold)}
-    main{width:min(1120px,100%);margin:auto;padding:24px 0 34px}
-    .intro{text-align:center;margin-bottom:clamp(18px,3vh,32px)}
-    .eyebrow{color:var(--gold);font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;margin:0 0 10px}
-    h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(2.2rem,4.3vw,3.8rem);line-height:1;margin:0 0 10px}
-    .subtitle{color:var(--muted);font-family:Georgia,serif;font-size:clamp(.95rem,1.7vw,1.15rem);font-style:italic;margin:0}
-    .albums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,5vw,72px);align-items:center}
-    .album{min-width:0;text-align:center}
-    .stack-wrap{height:clamp(250px,43vh,390px);display:grid;place-items:center;position:relative;isolation:isolate}
-    .stack{width:min(72%,360px);height:88%;position:relative;transition:transform .35s ease}
-    .album:hover .stack{transform:translateY(-7px) scale(1.025)}
-    .print{position:absolute;width:76%;height:82%;left:12%;top:8%;border:1px solid rgba(255,255,255,.48);background:#18202c;box-shadow:0 18px 48px #05070c77;overflow:hidden}
-    .print:nth-child(1){transform:rotate(-10deg) translate(-14%,-2%);z-index:1}
-    .print:nth-child(2){transform:rotate(8deg) translate(13%,0);z-index:2}
-    .print:nth-child(3){transform:rotate(-1deg);z-index:3}
-    .print img{width:100%;height:100%;object-fit:cover;display:block}
-    .nature-one img{object-position:center 54%}
-    .nature-two img{object-position:center 58%}
-    .nature-three img{object-position:center 50%}
-    .moon-print{background-color:#111622;background-image:radial-gradient(circle at 50% 48%,#cfcabd 0,#a7a8ab 30%,#4b5362 31%,#131824 32%,transparent 33%),radial-gradient(circle at 30% 28%,#ffffff18 0 1px,transparent 2px),radial-gradient(circle at 72% 70%,#ffffff18 0 1px,transparent 2px),linear-gradient(145deg,#252d3d,#080b13)}
-    .moon-print:nth-child(1){background-image:radial-gradient(circle at 45% 48%,#d7d2c5 0,#a7a8ab 31%,#151a26 32%,#101520 47%,transparent 48%),linear-gradient(145deg,#283346,#090c14)}
-    .moon-print:nth-child(2){background-image:radial-gradient(circle at 53% 48%,#e2ddcf 0,#aeb0b1 39%,#1a2030 40%,#101520 51%,transparent 52%),linear-gradient(145deg,#202a3b,#080b12)}
-    .moon-print:nth-child(3){background-image:radial-gradient(circle at 50% 50%,#f0ead8 0,#c9c4b7 42%,#858a94 70%,#41495a 100%),radial-gradient(circle at 34% 35%,#777e8a 0 3%,transparent 4%),radial-gradient(circle at 63% 58%,#777e8a 0 4%,transparent 5%),linear-gradient(145deg,#222c3d,#090d16)}
-    .emoji{position:absolute;z-index:5;top:2%;left:50%;transform:translateX(-50%);font-size:clamp(2.2rem,4vw,3.2rem);filter:drop-shadow(0 4px 12px #0009)}
-    .album-title{font-family:Georgia,serif;font-size:clamp(1.5rem,2.6vw,2.15rem);font-weight:400;margin:5px 0 6px}
-    .album-caption{color:var(--muted);font-size:.76rem;letter-spacing:.13em;text-transform:uppercase;margin:0}
-    @media(max-width:650px){
-      .page{min-height:520px;grid-template-rows:68px 1fr;padding:0 14px}
-      header{height:68px;grid-template-columns:1fr}
-      .brand{display:none}
-      nav{grid-column:1;gap:clamp(12px,4vw,24px)}
-      nav a{font-size:.62rem;letter-spacing:.07em}
-      main{padding:18px 0 22px}
-      .intro{margin-bottom:12px}
-      .stack-wrap{height:clamp(210px,36vh,290px)}
-      .stack{width:88%;height:84%}
-      .albums{gap:8px}
-      .print{width:82%;height:82%;left:9%}
-      .album-title{font-size:1.3rem}
-      .album-caption{font-size:.59rem;letter-spacing:.08em}
+    :root {
+      color-scheme: dark;
+      --ink: #f6f1e8;
+      --muted: #c5c0b7;
+      --gold: #e8c17a;
+      --line: rgba(255, 255, 255, .2);
+      --panel: rgba(13, 17, 29, .78);
     }
-    @media(max-width:380px){
-      nav{gap:9px}
-      nav a{font-size:.57rem}
-      .stack-wrap{height:200px}
-      .stack{width:94%}
-      .album-title{font-size:1.15rem}
+
+    * {
+      box-sizing: border-box;
     }
-    @media(max-height:650px) and (min-width:651px){
-      main{padding:12px 0}
-      .intro{margin-bottom:10px}
-      .stack-wrap{height:clamp(205px,38vh,270px)}
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      min-height: 100%;
+      margin: 0;
+      overflow: hidden;
     }
-    @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important}}
+
+    body {
+      color: var(--ink);
+      background: #10131d url("bg-lake.jpg") center / cover no-repeat fixed;
+      font-family: inherit;
+    }
+
+    body::before {
+      position: fixed;
+      z-index: 0;
+      inset: 0;
+      content: "";
+      background:
+        linear-gradient(90deg, rgba(8, 11, 20, .78), rgba(8, 11, 20, .35) 55%, rgba(8, 11, 20, .62)),
+        linear-gradient(0deg, rgba(8, 11, 20, .55), rgba(8, 11, 20, .15));
+      pointer-events: none;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .photo-page {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      width: 100%;
+      height: 100dvh;
+      min-height: 0;
+      padding: 22px clamp(18px, 5vw, 76px) 26px;
+    }
+
+    .photo-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 52px;
+    }
+
+    .photo-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: clamp(20px, 4vw, 58px);
+      width: 100%;
+      font-size: .76rem;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .photo-nav a {
+      position: relative;
+      padding: 9px 0;
+      color: rgba(255, 255, 255, .85);
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+
+    .photo-nav a:hover,
+    .photo-nav a[aria-current="page"] {
+      color: var(--gold);
+    }
+
+    .photo-nav a[aria-current="page"]::after {
+      position: absolute;
+      right: 0;
+      bottom: 1px;
+      left: 0;
+      height: 1px;
+      content: "";
+      background: var(--gold);
+    }
+
+    .photo-main {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 0;
+      padding-top: 12px;
+    }
+
+    .intro {
+      margin: 0 0 22px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 9px;
+      color: var(--gold);
+      font-size: .68rem;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      font-weight: 400;
+      line-height: 1.05;
+    }
+
+    .intro-copy {
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(.95rem, 1.5vw, 1.12rem);
+      font-style: italic;
+    }
+
+    .album-choice,
+    .album-gallery {
+      width: min(100%, 1120px);
+      margin: 0 auto;
+    }
+
+    .album-choice {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(18px, 5vw, 68px);
+      align-items: center;
+    }
+
+    .album-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 0;
+      padding: 0;
+      border: 0;
+      color: var(--ink);
+      background: none;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .album-stack {
+      position: relative;
+      width: min(100%, 350px);
+      height: clamp(190px, 31vh, 320px);
+      margin: 0 auto 19px;
+      transition: transform .25s ease;
+    }
+
+    .album-card:hover .album-stack {
+      transform: translateY(-5px) rotate(-1deg);
+    }
+
+    .polaroid {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(68%, 225px);
+      height: 90%;
+      padding: 9px 9px 35px;
+      border: 1px solid rgba(255, 255, 255, .52);
+      background: #f2eee5;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, .42);
+      transform: translate(-50%, -50%) rotate(-8deg);
+    }
+
+    .polaroid:nth-child(2) {
+      transform: translate(-50%, -50%) rotate(7deg);
+    }
+
+    .polaroid:nth-child(3) {
+      transform: translate(-50%, -50%) rotate(-1deg);
+    }
+
+    .polaroid img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: #10131d;
+    }
+
+    .album-emoji {
+      position: absolute;
+      z-index: 2;
+      right: 4%;
+      bottom: 0;
+      display: grid;
+      width: clamp(52px, 7vw, 78px);
+      aspect-ratio: 1;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, .38);
+      border-radius: 50%;
+      background: rgba(15, 19, 29, .86);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .35);
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+    }
+
+    .album-name {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+      font-weight: 400;
+    }
+
+    .album-hint {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: .78rem;
+      letter-spacing: .08em;
+    }
+
+    .album-gallery {
+      display: none;
+      min-height: 0;
+      grid-template-rows: auto minmax(0, 1fr);
+    }
+
+    .album-gallery.is-visible {
+      display: grid;
+    }
+
+    .gallery-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 15px;
+    }
+
+    .gallery-heading h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.45rem, 2.4vw, 2rem);
+      font-weight: 400;
+    }
+
+    .back-button {
+      padding: 8px 0;
+      border: 0;
+      color: var(--gold);
+      background: none;
+      cursor: pointer;
+      font: inherit;
+      font-size: .76rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .back-button:hover {
+      color: #fff;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .photo-card {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+      padding: 8px 8px 10px;
+      border: 1px solid rgba(255, 255, 255, .22);
+      background: var(--panel);
+      box-shadow: 0 12px 34px rgba(0, 0, 0, .28);
+      cursor: zoom-in;
+      text-align: left;
+      transition: transform .2s ease, border-color .2s ease;
+    }
+
+    .photo-card:hover {
+      z-index: 1;
+      border-color: rgba(232, 193, 122, .8);
+      transform: translateY(-3px);
+    }
+
+    .photo-card:nth-child(1),
+    .photo-card:nth-child(2),
+    .photo-card:nth-child(3) {
+      grid-column: span 2;
+    }
+
+    .photo-card:nth-child(4) {
+      grid-column: 2 / span 2;
+    }
+
+    .photo-card:nth-child(5) {
+      grid-column: 4 / span 2;
+    }
+
+    .photo-card img {
+      display: block;
+      flex: 1;
+      width: 100%;
+      min-height: 0;
+      object-fit: contain;
+      background: rgba(0, 0, 0, .38);
+    }
+
+    .photo-card figcaption {
+      padding: 8px 3px 0;
+      color: rgba(255, 255, 255, .9);
+      font-size: .76rem;
+      line-height: 1.25;
+    }
+
+    .photo-card figure {
+      display: contents;
+      margin: 0;
+    }
+
+    .lightbox {
+      position: fixed;
+      z-index: 10;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 48px;
+      background: rgba(5, 7, 12, .94);
+    }
+
+    .lightbox.is-open {
+      display: flex;
+    }
+
+    .lightbox img {
+      display: block;
+      max-width: min(90vw, 1200px);
+      max-height: 82dvh;
+      object-fit: contain;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, .55);
+    }
+
+    .lightbox-caption {
+      position: absolute;
+      right: 70px;
+      bottom: 18px;
+      left: 70px;
+      color: rgba(255, 255, 255, .85);
+      text-align: center;
+      font-size: .85rem;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: #fff;
+      background: rgba(255, 255, 255, .08);
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+
+    @media (max-width: 650px) {
+      .photo-page {
+        padding: 12px 14px 16px;
+      }
+
+      .photo-nav {
+        gap: clamp(10px, 3vw, 20px);
+        font-size: .62rem;
+        letter-spacing: .08em;
+      }
+
+      .intro {
+        margin-bottom: 14px;
+      }
+
+      .album-choice {
+        gap: 8px;
+      }
+
+      .album-stack {
+        height: clamp(155px, 27vh, 230px);
+      }
+
+      .polaroid {
+        width: 75%;
+      }
+
+      .photo-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .photo-card:nth-child(n) {
+        grid-column: auto;
+      }
+
+      .photo-card {
+        padding: 5px 5px 7px;
+      }
+
+      .photo-card figcaption {
+        padding-top: 5px;
+        font-size: .66rem;
+      }
+
+      .photo-card:nth-child(5) {
+        grid-column: 1 / -1;
+        width: 50%;
+        justify-self: center;
+      }
+
+      .gallery-heading {
+        margin-bottom: 8px;
+      }
+
+      .lightbox {
+        padding: 20px;
+      }
+
+      .lightbox-caption {
+        right: 20px;
+        bottom: 12px;
+        left: 20px;
+      }
+    }
+
+    @media (max-height: 620px) and (min-width: 651px) {
+      .photo-page {
+        padding-top: 8px;
+        padding-bottom: 10px;
+      }
+
+      .photo-header {
+        min-height: 42px;
+      }
+
+      .intro {
+        margin-bottom: 10px;
+      }
+
+      .album-stack {
+        height: 25vh;
+        min-height: 140px;
+      }
+
+      .gallery-heading {
+        margin-bottom: 7px;
+      }
+
+      .photo-grid {
+        gap: 7px;
+      }
+
+      .photo-card {
+        padding: 5px 5px 7px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
   </style>
 </head>
+
 <body>
-  <div class="page">
-    <header>
-      <a class="brand" href="index.html">◐ Au fil des nuits</a>
-      <nav aria-label="Navigation principale">
+  <div class="photo-page" id="photoPage">
+    <header class="photo-header">
+      <nav class="photo-nav" aria-label="Navigation principale">
         <a href="index.html">Accueil</a>
         <a href="photos.html" aria-current="page">Photos</a>
         <a href="materiel.html">Matériel</a>
         <a href="widget.html">Widget</a>
       </nav>
     </header>
-    <main>
-      <section class="intro">
-        <p class="eyebrow">Deux albums, un même regard</p>
+
+    <main class="photo-main">
+      <section class="intro" id="intro">
+        <p class="eyebrow">Au fil des nuits</p>
         <h1>Mes photographies</h1>
-        <p class="subtitle">Choisis ce que tu as envie de découvrir.</p>
+        <p class="intro-copy">Deux albums, quelques instants capturés.</p>
       </section>
-      <section class="albums" aria-label="Choisir un album photo">
-        <article class="album">
-          <div class="stack-wrap">
-            <span class="emoji" aria-hidden="true">🌙</span>
-            <div class="stack" aria-hidden="true">
-              <div class="print moon-print"></div>
-              <div class="print moon-print"></div>
-              <div class="print moon-print"></div>
-            </div>
-          </div>
-          <h2 class="album-title">La Lune</h2>
-          <p class="album-caption">Au fil de ses phases</p>
-        </article>
-        <article class="album">
-          <div class="stack-wrap">
-            <span class="emoji" aria-hidden="true">🍃</span>
-            <div class="stack" aria-hidden="true">
-              <div class="print nature-one"><img src="bg-reeds.jpg" alt=""></div>
-              <div class="print nature-two"><img src="bg-field.jpg" alt=""></div>
-              <div class="print nature-three"><img src="bg-lake.jpg" alt=""></div>
-            </div>
-          </div>
-          <h2 class="album-title">La Nature</h2>
-          <p class="album-caption">Instants au grand air</p>
-        </article>
+
+      <section class="album-choice" id="albumChoice" aria-label="Choisir un album">
+        <button class="album-card" type="button" data-album="lune" aria-label="Ouvrir l’album de la Lune">
+          <span class="album-stack" aria-hidden="true">
+            <span class="polaroid"><img src="photos/lune/03 Juin 2023.jpg" alt=""></span>
+            <span class="polaroid"><img src="photos/lune/04 Juin 2023.jpg" alt=""></span>
+            <span class="polaroid"><img src="photos/lune/1 Septembre 2023.jpg" alt=""></span>
+            <span class="album-emoji">🌙</span>
+          </span>
+          <span class="album-name">La Lune</span>
+          <span class="album-hint">Ouvrir l’album</span>
+        </button>
+
+        <button class="album-card" type="button" data-album="nature" aria-label="Ouvrir l’album de la nature">
+          <span class="album-stack" aria-hidden="true">
+            <span class="polaroid"><img src="photos/nature/02 Mai 2024.jpg" alt=""></span>
+            <span class="polaroid"><img src="photos/nature/01 09 2024(.jpg" alt=""></span>
+            <span class="polaroid"><img src="photos/nature/2 Mai 2026.jpg" alt=""></span>
+            <span class="album-emoji">🍃</span>
+          </span>
+          <span class="album-name">La nature</span>
+          <span class="album-hint">Ouvrir l’album</span>
+        </button>
+      </section>
+
+      <section class="album-gallery" id="albumGallery" aria-live="polite">
+        <div class="gallery-heading">
+          <h2 id="galleryTitle"></h2>
+          <button class="back-button" id="backButton" type="button">← Les albums</button>
+        </div>
+        <div class="photo-grid" id="photoGrid"></div>
       </section>
     </main>
   </div>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo agrandie">
+    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Fermer">×</button>
+    <img id="lightboxImage" src="" alt="">
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+
+  <script>
+    const albums = {
+      lune: {
+        title: "L’album de la Lune",
+        photos: [
+          { src: "photos/lune/03 Juin 2023.jpg", alt: "La Lune photographiée le 3 juin 2023", date: "3 juin 2023" },
+          { src: "photos/lune/04 Juin 2023.jpg", alt: "La Lune photographiée le 4 juin 2023", date: "4 juin 2023" },
+          { src: "photos/lune/1 Septembre 2023.jpg", alt: "La Lune photographiée le 1er septembre 2023", date: "1er septembre 2023" },
+          { src: "photos/lune/2 Septembre 2023.jpg", alt: "La Lune photographiée le 2 septembre 2023", date: "2 septembre 2023" },
+          { src: "photos/lune/12 Juillet 2026.jpg", alt: "La Lune photographiée le 12 juillet 2026", date: "12 juillet 2026" }
+        ]
+      },
+      nature: {
+        title: "L’album de la nature",
+        photos: [
+          { src: "photos/nature/02 Mai 2024.jpg", alt: "Paysage de campagne sous un ciel nuageux", date: "2 mai 2024" },
+          { src: "photos/nature/01 09 2024(.jpg", alt: "Coucher de soleil sur un paysage", date: "1er septembre 2024 · photo 1" },
+          { src: "photos/nature/01 09 2024.jpg", alt: "Paysage au coucher du soleil", date: "1er septembre 2024 · photo 2" },
+          { src: "photos/nature/01 10 2025 (.jpg", alt: "Photographie de nature", date: "1er octobre 2025" },
+          { src: "photos/nature/2 Mai 2026.jpg", alt: "Bâtiment ancien sous un ciel nuageux", date: "2 mai 2026" }
+        ]
+      }
+    };
+
+    const intro = document.getElementById("intro");
+    const albumChoice = document.getElementById("albumChoice");
+    const albumGallery = document.getElementById("albumGallery");
+    const galleryTitle = document.getElementById("galleryTitle");
+    const photoGrid = document.getElementById("photoGrid");
+    const backButton = document.getElementById("backButton");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImage = document.getElementById("lightboxImage");
+    const lightboxCaption = document.getElementById("lightboxCaption");
+    const lightboxClose = document.getElementById("lightboxClose");
+
+    function openAlbum(name) {
+      const album = albums[name];
+      if (!album) return;
+
+      galleryTitle.textContent = album.title;
+      photoGrid.replaceChildren();
+
+      album.photos.forEach((photo) => {
+        const button = document.createElement("button");
+        button.className = "photo-card";
+        button.type = "button";
+        button.setAttribute("aria-label", `Agrandir la photo du ${photo.date}`);
+
+        const figure = document.createElement("figure");
+        const image = document.createElement("img");
+        image.src = photo.src;
+        image.alt = photo.alt;
+        image.loading = "eager";
+
+        const caption = document.createElement("figcaption");
+        caption.textContent = photo.date;
+
+        figure.append(image, caption);
+        button.append(figure);
+        button.addEventListener("click", () => openLightbox(photo));
+        photoGrid.append(button);
+      });
+
+      intro.hidden = true;
+      albumChoice.hidden = true;
+      albumGallery.classList.add("is-visible");
+    }
+
+    function closeAlbum() {
+      albumGallery.classList.remove("is-visible");
+      albumChoice.hidden = false;
+      intro.hidden = false;
+    }
+
+    function openLightbox(photo) {
+      lightboxImage.src = photo.src;
+      lightboxImage.alt = photo.alt;
+      lightboxCaption.textContent = photo.date;
+      lightbox.classList.add("is-open");
+      lightboxClose.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove("is-open");
+      lightboxImage.src = "";
+    }
+
+    document.querySelectorAll("[data-album]").forEach((button) => {
+      button.addEventListener("click", () => openAlbum(button.dataset.album));
+    });
+
+    backButton.addEventListener("click", closeAlbum);
+    lightboxClose.addEventListener("click", closeLightbox);
+
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        if (lightbox.classList.contains("is-open")) closeLightbox();
+        else if (albumGallery.classList.contains("is-visible")) closeAlbum();
+      }
+    });
+  </script>
 </body>
 </html>
