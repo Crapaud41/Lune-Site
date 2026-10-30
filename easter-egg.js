@@ -182,7 +182,7 @@
       }
     }
   `;
-  document.head.append(style);
+  style.textContent += `    .frog-egg-scene {      position: fixed;      z-index: 9999;      inset: auto 0 0;      width: 100%;      height: clamp(132px, 22vh, 190px);      overflow: hidden;      background: transparent;      animation: none;      pointer-events: none;    }    .frog-egg-cat {      bottom: 0;      left: 0;      width: clamp(190px, 26vw, 300px);      animation: frog-egg-walk 5s linear both;    }    .frog-egg-cat-body {      fill: #111318;      stroke: #d5cbbc;      stroke-width: 2;    }    .frog-egg-cat-patch { fill: #292c31; }    .frog-egg-cat-tail { stroke: #111318; }    .frog-egg-leg { stroke: #111318; }    @keyframes frog-egg-walk {      from { transform: translateX(100vw) scaleX(-1); }      to { transform: translateX(-110%) scaleX(-1); }    }    @media (max-width: 600px) {      .frog-egg-cat { width: 210px; }    }    @media (prefers-reduced-motion: reduce) {      .frog-egg-cat { animation-duration: .8s; }    }  `;  document.head.append(style);
 
   const trigger = document.createElement("button");
   trigger.className = "frog-egg-trigger";
@@ -198,10 +198,10 @@
     const scene = document.createElement("div");
     scene.className = "frog-egg-scene";
     scene.setAttribute("role", "status");
-    scene.setAttribute("aria-label", "Un chat traverse l’écran avec un crapaud sur le dos.");
+    scene.setAttribute("aria-label", "Un chat noir marche au bas de l’écran de droite à gauche avec un crapaud sur le dos.");
 
     scene.innerHTML = `
-      <p class="frog-egg-caption">On dirait qu’un crapaud a trouvé un taxi.</p>
+
 
       <svg class="frog-egg-cat" viewBox="0 0 300 170" aria-hidden="true">
         <path class="frog-egg-cat-tail" d="M76 95 C 42 101, 35 67, 56 56 C 67 50, 78 59, 72 69"/>
@@ -226,7 +226,7 @@
         <path class="frog-egg-cat-body" d="M225 47 L239 31 L241 61Z"/>
 
         <path d="M235 72 Q240 75 244 72" fill="none" stroke="#303445" stroke-width="3" stroke-linecap="round"/>
-        <circle cx="224" cy="67" r="2.5" fill="#303445"/>
+        <circle cx="224" cy="67" r="2.5" fill="#e8c17a"/>
         <path d="M246 78 L259 81 M246 83 L260 88" fill="none" stroke="#9b8f83" stroke-width="2"/>
 
         <path class="frog-egg-leg frog-egg-leg-a" d="M93 106 L88 139 L77 145"/>
@@ -248,6 +248,6 @@
     document.body.append(scene);
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    window.setTimeout(() => scene.remove(), reducedMotion ? 1200 : 4300);
+    window.setTimeout(() => scene.remove(), reducedMotion ? 1200 : 5300);
   });
 })();
