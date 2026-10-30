@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080d1b">
+  <meta name="description" content="Un voyage de la Terre à la Lune.">
+  <title>En route vers la Lune</title>
+
+  <noscript>
+    <meta http-equiv="refresh" content="4;url=index.html">
+  </noscript>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      background: #080d1b;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      min-height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    body {
+      position: relative;
+      background:
+        radial-gradient(ellipse at 68% 40%, rgba(45, 59, 100, .33), transparent 43%),
+        linear-gradient(145deg, #090e1e 0%, #10172b 52%, #080c18 100%);
+    }
+
+    .journey {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 100svh;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .earth,
+    .moon {
+      position: absolute;
+      display: block;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .earth {
+      z-index: 1;
+      left: -13vw;
+      bottom: -24vw;
+      width: min(62vw, 780px);
+      min-width: 460px;
+      filter: drop-shadow(20px -12px 50px rgba(76, 118, 207, .24));
+    }
+
+    .moon {
+      z-index: 2;
+      top: 9vh;
+      right: 7vw;
+      width: clamp(130px, 19vw, 250px);
+      filter: drop-shadow(0 0 28px rgba(237, 224, 192, .18));
+      animation: moon-arrival 4s ease-out both;
+    }
+
+    .rocket {
+      position: absolute;
+      z-index: 3;
+      top: 68%;
+      left: 17%;
+      width: clamp(62px, 7vw, 100px);
+      overflow: visible;
+      transform-origin: center;
+      animation: rocket-flight 3.55s cubic-bezier(.55, .05, .31, .97) .15s both;
+      filter: drop-shadow(0 0 12px rgba(232, 193, 122, .22));
+    }
+
+    .flame {
+      transform-origin: 50% 0;
+      animation: flame-flicker .14s ease-in-out infinite alternate;
+    }
+
+    .fade {
+      position: absolute;
+      z-index: 5;
+      inset: 0;
+      background: #080d1b;
+      opacity: 0;
+      pointer-events: none;
+      animation: fade-to-home .4s ease-in 3.6s both;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @keyframes rocket-flight {
+      0% {
+        opacity: 0;
+        transform: translate(0, 0) rotate(-38deg) scale(.72);
+      }
+
+      8% {
+        opacity: 1;
+        transform: translate(0, 0) rotate(-38deg) scale(.82);
+      }
+
+      78% {
+        opacity: 1;
+        transform: translate(47vw, -33vh) rotate(-38deg) scale(.68);
+      }
+
+      94% {
+        opacity: 1;
+        transform: translate(56vw, -40vh) rotate(-38deg) scale(.52);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(59vw, -43vh) rotate(-38deg) scale(.38);
+      }
+    }
+
+    @keyframes flame-flicker {
+      from {
+        transform: scaleY(.78);
+        opacity: .72;
+      }
+
+      to {
+        transform: scaleY(1.15);
+        opacity: 1;
+      }
+    }
+
+    @keyframes moon-arrival {
+      0%,
+      83% {
+        filter: drop-shadow(0 0 22px rgba(237, 224, 192, .15));
+      }
+
+      100% {
+        filter: drop-shadow(0 0 52px rgba(237, 224, 192, .48));
+      }
+    }
+
+    @keyframes fade-to-home {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .earth {
+        left: -33vw;
+        bottom: -9vh;
+        width: 105vw;
+        min-width: 0;
+      }
+
+      .moon {
+        top: 13vh;
+        right: 7vw;
+        width: clamp(112px, 30vw, 175px);
+      }
+
+      .rocket {
+        top: 69%;
+        left: 12%;
+        width: 64px;
+      }
+
+      @keyframes rocket-flight {
+        0% {
+          opacity: 0;
+          transform: translate(0, 0) rotate(-38deg) scale(.72);
+        }
+
+        8% {
+          opacity: 1;
+          transform: translate(0, 0) rotate(-38deg) scale(.82);
+        }
+
+        78% {
+          opacity: 1;
+          transform: translate(54vw, -35vh) rotate(-38deg) scale(.62);
+        }
+
+        94% {
+          opacity: 1;
+          transform: translate(67vw, -43vh) rotate(-38deg) scale(.48);
+        }
+
+        100% {
+          opacity: 0;
+          transform: translate(71vw, -46vh) rotate(-38deg) scale(.35);
+        }
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .rocket {
+        animation-duration: .55s;
+        animation-delay: 0s;
+      }
+
+      .moon,
+      .flame {
+        animation: none;
+      }
+
+      .fade {
+        animation-duration: .2s;
+        animation-delay: .35s;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="journey" aria-label="Voyage de la Terre à la Lune">
+    <p class="sr-only">Une fusée quitte la Terre et rejoint la Lune. L’accueil du site s’ouvre ensuite.</p>
+
+    <svg class="earth" viewBox="0 0 700 700" aria-hidden="true">
+      <defs>
+        <radialGradient id="earthOcean" cx="68%" cy="30%" r="78%">
+          <stop offset="0" stop-color="#5489d0"/>
+          <stop offset=".48" stop-color="#24518d"/>
+          <stop offset="1" stop-color="#101d3c"/>
+        </radialGradient>
+        <linearGradient id="earthShade" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#d4e2ff" stop-opacity=".32"/>
+          <stop offset=".38" stop-color="#6b91ca" stop-opacity=".06"/>
+          <stop offset="1" stop-color="#050a18" stop-opacity=".82"/>
+        </linearGradient>
+        <clipPath id="earthClip">
+          <circle cx="350" cy="350" r="342"/>
+        </clipPath>
+      </defs>
+
+      <circle cx="350" cy="350" r="342" fill="url(#earthOcean)"/>
+      <g clip-path="url(#earthClip)" fill="#7caa72" opacity=".8">
+        <path d="M110 176l36-27 45 5 29 26-8 30-31 17-14 37-34 13-26-26-31-8-9-35z"/>
+        <path d="M214 279l35 9 28 28-7 45-21 36-11 61-27 42-20-23 5-50-20-32 9-54z"/>
+        <path d="M362 139l38-26 52 9 20 20 49 4 31 30-16 34-38 12-18 30-38-3-30-25-37 4-23-28-38-7z"/>
+        <path d="M447 277l42-19 47 11 34 32-14 39-34 16-13 48-29 22-24-35-24-10-14-48z"/>
+        <path d="M83 405l31-17 36 14 11 34-23 26-39 1-28-24z"/>
+        <path d="M302 487l37-17 42 13 14 31-31 25-43-7-24-21z"/>
+        <path d="M540 461l32-20 28 12 9 30-25 18-32-9z"/>
+      </g>
+      <circle cx="350" cy="350" r="342" fill="url(#earthShade)"/>
+      <circle cx="350" cy="350" r="338" fill="none" stroke="#a9caff" stroke-opacity=".38" stroke-width="5"/>
+    </svg>
+
+    <svg class="moon" viewBox="0 0 300 300" aria-hidden="true">
+      <defs>
+        <radialGradient id="moonSurface" cx="32%" cy="28%" r="75%">
+          <stop offset="0" stop-color="#fff9e9"/>
+          <stop offset=".58" stop-color="#ded7c8"/>
+          <stop offset="1" stop-color="#aaa99f"/>
+        </radialGradient>
+        <clipPath id="moonClip">
+          <circle cx="150" cy="150" r="137"/>
+        </clipPath>
+      </defs>
+      <circle cx="150" cy="150" r="137" fill="url(#moonSurface)"/>
+      <g clip-path="url(#moonClip)" fill="#85877f" opacity=".22">
+        <circle cx="105" cy="88" r="18"/>
+        <circle cx="183" cy="75" r="11"/>
+        <circle cx="205" cy="138" r="23"/>
+        <circle cx="116" cy="168" r="14"/>
+        <circle cx="164" cy="210" r="18"/>
+        <circle cx="72" cy="221" r="10"/>
+        <circle cx="232" cy="202" r="9"/>
+      </g>
+      <g clip-path="url(#moonClip)" fill="none" stroke="#fffdf4" stroke-opacity=".22">
+        <circle cx="105" cy="88" r="25"/>
+        <circle cx="205" cy="138" r="31"/>
+        <circle cx="164" cy="210" r="25"/>
+      </g>
+      <circle cx="150" cy="150" r="136" fill="none" stroke="#fff9e8" stroke-opacity=".58" stroke-width="3"/>
+    </svg>
+
+    <svg class="rocket" viewBox="0 0 120 180" aria-hidden="true">
+      <defs>
+        <linearGradient id="rocketBody" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#fff9ed"/>
+          <stop offset=".55" stop-color="#d9d7d1"/>
+          <stop offset="1" stop-color="#8d98aa"/>
+        </linearGradient>
+        <linearGradient id="rocketFlame" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#fff0ae"/>
+          <stop offset=".55" stop-color="#f2a65a"/>
+          <stop offset="1" stop-color="#d65a42" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+
+      <path class="flame" d="M47 128 Q60 153 60 178 Q73 153 73 128Z" fill="url(#rocketFlame)"/>
+      <path d="M60 13 C37 35 31 67 34 111 L60 132 L86 111 C89 67 83 35 60 13Z"
+            fill="url(#rocketBody)" stroke="#fff7e8" stroke-width="2"/>
+      <path d="M35 91 Q17 103 19 129 L42 116Z" fill="#bd6b55"/>
+      <path d="M85 91 Q103 103 101 129 L78 116Z" fill="#bd6b55"/>
+      <circle cx="60" cy="69" r="11" fill="#192944" stroke="#e8c17a" stroke-width="4"/>
+      <path d="M49 112 L60 124 L71 112" fill="none" stroke="#8c9aaf" stroke-width="3"/>
+      <path d="M54 31 Q60 24 66 31" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="3"/>
+    </svg>
+
+    <div class="fade" aria-hidden="true"></div>
+  </main>
+
+  <script>
+    // Après le voyage, ouvrir la page d’accueil du site.
+    // Si le nom de la page d’accueil change, modifier cette adresse.
+    const homePage = "index.html";
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const travelDuration = prefersReducedMotion ? 900 : 4000;
+
+    window.setTimeout(() => {
+      window.location.replace(homePage);
+    }, travelDuration);
+  </script>
+</body>
+</html>
